@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>deadline-relay demo</title>
+  <meta name="description" content="Live demo of the deadline-relay npm package: deadline propagation across HTTP services." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>deadline-relay <span class="tag">live demo</span></h1>
+    <p class="lede">
+      A client calls <b>gateway → orders → inventory</b>, but gives up waiting after a fixed budget.
+      Does the slow <b>inventory</b> service keep working for nobody, or does it stop?
+    </p>
+    <p class="links">
+      <a href="https://www.npmjs.com/package/deadline-relay">npm package</a> ·
+      <a href="https://github.com/anshikaahuja19/deadline-relay">package source</a> ·
+      <a href="https://github.com/anshikaahuja19/deadline-relay-demo">demo source</a>
+    </p>
+  </header>
+
+  <main>
+    <section class="panel controls">
+      <label>
+        <span>Client budget <output id="budgetOut">500</output> ms</span>
+        <input id="budget" type="range" min="100" max="3000" step="50" value="500" />
+        <small>How long the client is willing to wait.</small>
+      </label>
+      <label>
+        <span>Inventory query time <output id="latencyOut">2000</output> ms</span>
+        <input id="latency" type="range" min="0" max="4000" step="100" value="2000" />
+        <small>How long the slow service needs.</small>
+      </label>
+      <div class="buttons">
+        <button id="compare" class="primary">Run both and compare</button>
+        <button id="runRelay">With deadline-relay</button>
+        <button id="runPlain">Without</button>
+      </div>
+    </section>
+
+    <section id="results" class="results">
+      <p class="empty">Press <b>Run both and compare</b> to start.</p>
+    </section>
+
+    <section class="panel code">
+      <h2>The code that makes the difference</h2>
+      <pre><code>const { deadline } = require('deadline-relay');
+
+app.use(deadline({ timeout: 5000, reserve: 25 }));
+
+app.get('/orders', async (req, res) => {
+  // forwards the *remaining* budget and aborts when it runs out
+  const r = await req.deadline.fetch('http://inventory/stock');
+  res.status(r.status).send(await r.text());
+});
+
+app.get('/stock', async (req, res) => {
+  // pass the signal to anything cancellable (DB driver, fetch, fs...)
+  const rows = await db.query(sql, { signal: req.deadline.signal });
+  res.json(rows);
+});</code></pre>
+      <p>
+        Install it with <code>npm install deadline-relay</code>. The full source of this page and its
+        three services is in <a href="https://github.com/anshikaahuja19/deadline-relay-demo/blob/main/server.js">server.js</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    The three services run in one process here (so the demo can be hosted for free) but talk over real HTTP,
+    exactly as separate deployments would.
+  </footer>
+
+  <template id="runTemplate">
+    <article class="panel run">
+      <h3></h3>
+      <p class="verdict"></p>
+      <div class="timeline"></div>
+      <ol class="log"></ol>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
