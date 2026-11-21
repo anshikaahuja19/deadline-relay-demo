@@ -3,7 +3,7 @@
 // A demo of the deadline-relay npm package.
 //
 // Three "services" (gateway -> orders -> inventory) run in this one process so
-// the demo can be hosted for free, but they talk to each other over real HTTP
+// the demo starts with a single command, but they talk to each other over real HTTP
 // exactly as separate deployments would. Each request is tagged with a run id
 // so the page can show a timeline of what every service did.
 
