@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>deadline-relay demo</title>
-  <meta name="description" content="Live demo of the deadline-relay npm package: deadline propagation across HTTP services." />
+  <meta name="description" content="Demo of the deadline-relay npm package: deadline propagation across HTTP services." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>deadline-relay <span class="tag">live demo</span></h1>
+    <h1>deadline-relay <span class="tag">demo</span></h1>
     <p class="lede">
       A client calls <b>gateway → orders → inventory</b>, but gives up waiting after a fixed budget.
       Does the slow <b>inventory</b> service keep working for nobody, or does it stop?
@@ -69,7 +69,7 @@ app.get('/stock', async (req, res) => {
   </main>
 
   <footer>
-    The three services run in one process here (so the demo can be hosted for free) but talk over real HTTP,
+    The three services run in one process here (so the demo starts with one command) but talk over real HTTP,
     exactly as separate deployments would.
   </footer>
 
