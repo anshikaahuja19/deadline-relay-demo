@@ -1,0 +1,21 @@
+{
+  "name": "deadline-relay-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Live demo of the deadline-relay npm package: see what happens to a chain of services when the client gives up, with and without deadline propagation.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "deadline-relay": "^1.0.1",
+    "express": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Anshika Ahuja",
+  "license": "MIT"
+}
