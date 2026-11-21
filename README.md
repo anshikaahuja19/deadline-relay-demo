@@ -7,6 +7,8 @@ A runnable demo of the [**deadline-relay**](https://www.npmjs.com/package/deadli
 **Package:** [npmjs.com/package/deadline-relay](https://www.npmjs.com/package/deadline-relay) ·
 [source on GitHub](https://github.com/anshikaahuja19/deadline-relay)
 
+![Side-by-side comparison: with deadline-relay every service stops at ~470ms; without it, inventory keeps working until ~2100ms](docs/screenshot.png)
+
 ## What it shows
 
 A client calls three services in a chain: **gateway → orders → inventory**. The client will only wait for a fixed time (its *budget*), and the inventory query is slow. The page runs the same request two ways and shows a timeline for each:
@@ -71,6 +73,7 @@ public/index.html   the demo page
 public/app.js       runs the comparison and draws the timelines
 public/style.css    styles (light and dark mode)
 test/demo.test.js   end-to-end tests against a real server
+docs/screenshot.png the screenshot above
 ```
 
 ## API
