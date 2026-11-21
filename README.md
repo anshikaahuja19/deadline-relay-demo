@@ -2,10 +2,7 @@
 
 [![CI](https://github.com/anshikaahuja19/deadline-relay-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/anshikaahuja19/deadline-relay-demo/actions/workflows/ci.yml)
 
-A live demo of the [**deadline-relay**](https://www.npmjs.com/package/deadline-relay) npm package.
-
-**▶ Live demo:** <LIVE_URL>
-**▶ Pre-loaded comparison:** <LIVE_URL>/?run=compare&budget=500&latency=2000
+A runnable demo of the [**deadline-relay**](https://www.npmjs.com/package/deadline-relay) npm package.
 
 **Package:** [npmjs.com/package/deadline-relay](https://www.npmjs.com/package/deadline-relay) ·
 [source on GitHub](https://github.com/anshikaahuja19/deadline-relay)
@@ -60,7 +57,7 @@ The "without" version (`/plain/*` routes in the same file) uses plain `fetch` wi
 git clone https://github.com/anshikaahuja19/deadline-relay-demo.git
 cd deadline-relay-demo
 npm install
-npm start          # http://localhost:3000
+npm start          # then open http://localhost:3000
 npm test           # 5 end-to-end tests
 ```
 
@@ -74,7 +71,6 @@ public/index.html   the demo page
 public/app.js       runs the comparison and draws the timelines
 public/style.css    styles (light and dark mode)
 test/demo.test.js   end-to-end tests against a real server
-render.yaml         deployment config for Render
 ```
 
 ## API
@@ -85,15 +81,9 @@ render.yaml         deployment config for Render
 | `POST /api/run` | Body: `{ "mode": "relay" \| "plain", "budget": 50–5000, "latency": 0–4000 }`. Returns the outcome, the wasted milliseconds, and a timeline of events. |
 | `GET /health` | Health check: `{ "ok": true }`. |
 
-## Deployment
-
-It's deployed on [Render](https://render.com) using [`render.yaml`](./render.yaml): `npm install`, then `npm start`. The server listens on `$PORT`.
-
-> On Render's free plan the app sleeps when idle, so the first visit can take up to a minute to wake it.
-
 ## Notes
 
-The three services run in **one process** so the demo can be hosted for free. They still call each other over **real HTTP** (`127.0.0.1`), so the headers, timeouts and cancellation behave exactly as they would between separate deployments.
+The three services run in **one process** so the whole demo starts with a single `npm start`. They still call each other over **real HTTP** (`127.0.0.1`), so the headers, timeouts and cancellation behave exactly as they would between separate deployments.
 
 ## License
 
